@@ -40,20 +40,6 @@ def render_kepler_map(map_html_file):
 
 
 # --- UI 界面布局 ---
-
-# 1. 侧边栏 (Sidebar)
-# st.sidebar.header("Mission Select")
-
-# # --- 核心修改：添加策略选择器 ---
-# strategy_map = {
-#     "Plan A: Completeness First": "A",
-#     "Plan B: Counts First": "B"
-# }
-# selected_strategy_name = st.sidebar.radio(
-#     "Please Select Plan:",
-#     options=list(strategy_map.keys())
-# )
-# strategy_prefix = strategy_map[selected_strategy_name]
 selected_strategy_name = "Plan B"
 strategy_prefix = "B"
 
@@ -252,6 +238,15 @@ with st.expander("現場測試記錄輸入", expanded=True):
             df = pd.DataFrame([record])
             df.to_csv(save_file, mode='a', header=not file_exists, index=False, encoding='utf-8-sig')
             st.success("已保存到檔案 mission_test_records.csv！")
+
+            if os.path.isfile("mission_test_records.csv"):
+                with open("mission_test_records.csv", "rb") as f:
+                    st.download_button(
+                        "下載所有測試記錄 (CSV)",
+                        f,
+                        file_name="mission_test_records.csv",
+                        mime="text/csv"
+                    )
     else:
         st.info("當前沒有可選的測試站點。")
 
