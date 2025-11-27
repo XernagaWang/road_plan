@@ -4,3 +4,4 @@ numpy
 streamlit-folium
 folium
 plotly
+qrcode
